@@ -32,7 +32,7 @@ public class ContractFileManager {
                         .append(String.format("%.2f", salesContract.getProcessFee())).append("|")
                         .append(String.format("%.2f", salesContract.getTotalPrice())).append("|")
                         .append(salesContract.isFinance() ? "Yes" : "No").append("|")
-                        .append(String.format(".2f", salesContract.getMonthlyPayment()));
+                        .append(String.format("%.2f", salesContract.getMonthlyPayment()));
 
             } else if (contract instanceof LeaseContract) {
                 LeaseContract leaseContract = (LeaseContract) contract;
@@ -50,7 +50,7 @@ public class ContractFileManager {
                         .append(vehicle.getColor()).append("|")
                         .append(vehicle.getOdometer()).append("|")
                         .append(String.format("%.2f", vehicle.getPrice())).append("|");
-                stringBuilder.append(String.format(".2f", leaseContract.getExpectedEndingValue())).append("|")
+                stringBuilder.append(String.format("%.2f", leaseContract.getExpectedEndingValue())).append("|")
                         .append(String.format("%.2f", leaseContract.getLeaseFee())).append("|")
                         .append(String.format("%.2f", leaseContract.getTotalPrice())).append("|")
                         .append(String.format("%.2f", leaseContract.getMonthlyPayment())).append("|");

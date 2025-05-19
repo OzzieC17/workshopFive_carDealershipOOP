@@ -2,6 +2,7 @@ package com.ps;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -65,7 +66,7 @@ public class UserInterface {
                     processRemoveVehicleRequest();
                     break;
                 case 10:
-                    System.out.println("Sell or Lease?");
+                    processSellOrLeaseVehicleRequest();
                     break;
                 case 0:
                     System.out.println("Exiting");
@@ -214,6 +215,52 @@ public class UserInterface {
         for(Vehicle vehicle: vehicles){
             System.out.println(vehicle);
         }
+    }
+    private void processSellOrLeaseVehicleRequest(){
+        System.out.println("Enter VIN of vehicle to sell or lease: ");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+
+        Vehicle vehicle = dealership.getVehicleByVin(vin);
+        if (vehicle == null) {
+            System.out.println("Vehicle not found.");
+            return;
+        }
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+
+        System.out.println("Enter customer email: ");
+        String customerEmail = scanner.nextLine();
+
+        System.out.println("Enter contract date (YYYYMMDD): ");
+        String date = scanner.nextLine();
+
+        System.out.println("Sell or Lease (S/L): ");
+        String choice = scanner.nextLine().trim().toUpperCase();
+
+        Contract contract = null;
+
+        if (choice.equals("S")) {
+            System.out.println("Finance? (yes/no): ");
+            boolean finance = scanner.nextLine().trim().equalsIgnoreCase("yes");
+            contract = new SalesContract(date, customerName, customerEmail, vehicle, finance);
+
+        } else if (choice.equals("L")) {
+            contract = new LeaseContract(date, customerName, customerEmail, vehicle);
+
+        } else {
+            System.out.println("Invalid option.");
+            return;
+        }
+        ContractFileManager manager = new ContractFileManager();
+        manager.saveContract(contract);
+
+        dealership.removeVehicle(vin);
+        DealershipFileManager.saveDealership(dealership);
+
+        System.out.println("Transaction completed and saved.");
+
+
     }
 
 }

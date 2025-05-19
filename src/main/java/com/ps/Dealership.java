@@ -112,4 +112,13 @@ public class Dealership {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public Vehicle getVehicleByVin(int vin) {
+        for (Vehicle vehicle : inventory) {
+            if (vehicle.getVin() == vin){
+                return vehicle;
+            }
+        }
+        return null;
+    }
 }

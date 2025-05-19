@@ -41,8 +41,7 @@ public class DealershipFileManager {
         }
     }
     public static void saveDealership(Dealership dealership){
-        try {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("inventory.csv"));
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("inventory.csv"))) {
 
             String firstLine = String.format("%s|%s|%s\n", dealership.getName(), dealership.getAddress(), dealership.getPhone());
 
